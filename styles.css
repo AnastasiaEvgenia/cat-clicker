@@ -1,13 +1,14 @@
 html,
 body {
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
 	text-align: center;
+	background-color: lightsalmon;
 }
 
 .container {
 	display: inline-flex;
-	flex-direction: flex;
+	flex-direction: row;
 }
 
 .img_container {
@@ -21,4 +22,44 @@ body {
 	text-align: center;
 	border: 1px;
 	padding: 10px;
+}
+
+button {
+	width: 88px;
+	border: 3px solid;
+	padding: 1px 6px;
+}
+
+.drop_down {
+
+}
+
+.drop_down_contents {
+	border: inset;
+}
+
+.drop_down_contents p {
+	border: 1px inset;
+	padding: 0;
+	margin: 0;
+	height: 35px;
+	background-color: #C0AEAE;
+	width: 80px;
+}
+
+.drop_down_contents p:hover {
+	background-color: #15FFFF;
+	cursor: pointer;
+} 
+
+.drop_down_visibility {
+	display: none;
+}
+
+.img_container {
+	
+}
+
+.hidden {
+	display: none;
 }
