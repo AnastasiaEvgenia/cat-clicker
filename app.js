@@ -1,5 +1,6 @@
 /*----Application Data----*/
 const data = {
+    currentCat: null,
     cats: [{
             name: "asher",
             url: "images/asher.jpg",
@@ -34,59 +35,87 @@ const data = {
 
 
 /*----Application Octapus----*/
-const button = $('button');
-const catList = $('.drop_down_contents');
-const imgContainer = $('.img_container');
+const octapus = {
+    init: function() {
+        data.currentCat = data.cats[0];
+        catView.init();
+        catListView.init();
 
-//create list with cat names and append to dom hidden images
-for (let cat of data.cats) {
-    const catName = $(`<p>${cat.name}</p>`);
-    const catPic = $(`
-			<div class="cat-card hidden">
-				<p>${cat.name}</p>
-    			<img src="${cat.url}">
-				<p>Clicks: ${cat.clicks}</p>
-			</div>`);
-    catList.append(catName);
-    imgContainer.append(catPic);
+    },
+
+    getCats: function() {
+        return data.cats;
+    },
+
+    getCurrentCat: function() {
+        return data.currentCat;
+    },
+
+    setCurrentCat: function(cat) {
+        data.currentCat = cat;
+    },
+
+    incrementClicks: function() {
+        data.currentCat.clicks++;
+        catView.render();
+    }
+
 }
-
-//open cat list when the button is clicked.
-button.click(function() {
-    catList.toggleClass("drop_down_visibility");
-});
-
-
-const catListNames = $('.drop_down_contents p');
-const catCards = $('.cat-card');
-catList.click(function(evt) {
-	//find which cat was clicked
-	let currentCat = evt.target.innerText;
-	//find which catCard has same name with current cat
-	//and make it appear on DOM
-	for(let catCard of catCards) {
-		if(catCard.children[0].innerText === currentCat) {
-			catCard.classList.remove("hidden");
-		} else {
-			catCard.classList.add("hidden");
-		}
-	}
-	
-});
-
-const image = $('img');
-
-image.click(function(evt) {
-  let currentCatName = evt.target.previousElementSibling.innerText;
-  let currentCatClicks = evt.target.nextElementSibling;
-  for(let cat of data.cats) {
-  	if(currentCatName === cat.name){
-  		cat.clicks++;
-  		currentCatClicks.innerHTML = `Clicks: ${cat.clicks}`;
-  	}
-  } 
-});
 
 
 
 /*----Application View----*/
+const catListView = {
+    init: function() {
+        this.button = $('button');
+        this.catList = $('.drop_down_contents');
+
+        this.render();
+    },
+
+
+    render: function() {
+        const cats = octapus.getCats();
+
+        for(let cat of cats){
+            const catName = $(`<p>${cat.name}</p>`);
+            this.catList.append(catName);
+            catName.click( (function(cat) {
+                return function() { 
+                    octapus.setCurrentCat(cat);
+                    catView.render();
+                };
+            })(cat));
+        }
+
+        self = this;
+        this.button.click(function(){
+            self.catList.toggleClass("drop_down_visibility");
+        });
+    }
+};
+
+const catView = {
+    init: function() {
+        this.imgContainer = $('.img_container');
+        this.catName = $('.cat_name');
+        this.catImage = $('.cat_image');
+        this.catClicks = $('.cat_clicks');
+
+        this.catImage.click(function() {
+            octapus.incrementClicks();
+        });
+
+        this.render();
+    },
+
+
+    render: function() {
+        const currentCat = octapus.getCurrentCat();
+        this.catName.text(currentCat.name);
+        this.catImage.attr("src", currentCat.url);
+        this.catClicks.text(`Clicks: ${currentCat.clicks}`);
+    }
+}
+
+octapus.init();
