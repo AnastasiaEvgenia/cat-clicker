@@ -72,9 +72,9 @@ const octapus = {
     },
 
     updateCurrentCat: function() {
-        data.currentCat.name = catAdminView.inputName.value;
-        data.currentCat.url = catAdminView.inputUrl.value;
-        data.currentCat.clicks = catAdminView.inputClicks.value;
+        data.currentCat.name = catAdminView.inputName.val();
+        data.currentCat.url = catAdminView.inputUrl.val();
+        data.currentCat.clicks = catAdminView.inputClicks.val();
 
         catView.render();
         // catListView.render();
@@ -177,9 +177,9 @@ const catAdminView = {
         } else {            
             let newCat = octapus.getCurrentCat();
 
-            this.inputName.value = newCat.name;
-            this.inputUrl.value = newCat.url;
-            this.inputClicks.value = newCat.clicks;
+            this.inputName.val(newCat.name);
+            this.inputUrl.val(newCat.url);
+            this.inputClicks.val(newCat.clicks);
 
             this.adminForm.toggleClass("admin_form");
         }
