@@ -12,10 +12,33 @@
 </head>
 
 <body class="container">
-	<div class="drop_down">
-		<button>Select Cat</button>
-		<div class="drop_down_contents drop_down_visibility"></div>
+
+	<div class="controls">
+
+        <div class="list_controls">
+		  <button class="drop_down_button">Select Cat</button>
+		  <div class="drop_down_contents drop_down_visibility"></div>
+        </div>
+
+        <div class="admin_mode">
+            <button class="admin_button">Admin</button>
+            <form class="form admin_form" action="">
+                Cat Name:<br>
+                <input class="in_put input_name" type="text" name="catName" value="">
+                <br>
+                Cat picture Url:<br>
+                <input class="in_put input_url" type="url" name="caturl" value="">
+                <br>
+                Clicks received:<br>
+                <input class="in_put input_clicks" type="text" name="catClicks" value=""><br>
+                <input type="button" value="Submit" class="submit_button">
+                <input type="button" value="Cancel" class="cancel_button">
+            </form>
+
+        </div>
+
 	</div>
+
 	<div class="img_container">
         <div class="cat_card">
             <h2 class="cat_name"></h2>
